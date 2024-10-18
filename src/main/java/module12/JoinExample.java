@@ -45,7 +45,10 @@ public class JoinExample {
         );
         System.out.println(locationSet.collect());
 
-        // inner join datasets on person id
+        // inner join datasets on person id: this version returns the 2 tuples [((1,John),(1,DC)), ((4,Smith),(4,LA)), ((2,Albert),(2,NY))]
+        //JoinOperator.DefaultJoin<Tuple2<Integer, String>, Tuple2<Integer, String>> joined = personSet.join(locationSet).where(0).equalTo(0);
+
+        // inner join datasets on person id > [(1,John,DC), (4,Smith,LA), (2,Albert,NY)]
         DataSet<Tuple3<Integer, String, String>> joined = personSet.join(locationSet).where(0).equalTo(0)
                 .with(new JoinFunction<Tuple2<Integer, String>, Tuple2<Integer, String>, Tuple3<Integer, String, String>>()
                 {
@@ -55,6 +58,7 @@ public class JoinExample {
                         return new Tuple3<Integer, String, String>(person.f0, person.f1, location.f1);
                     }
                 });
+
         System.out.println("joined: ");
         System.out.println(joined.collect());
         System.out.println("*** end ***");
