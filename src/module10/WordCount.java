@@ -7,6 +7,7 @@ import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.operators.AggregateOperator;
 import org.apache.flink.api.java.operators.DataSource;
 import org.apache.flink.api.java.operators.FilterOperator;
+import org.apache.flink.api.java.operators.UnsortedGrouping;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.core.fs.FileSystem;
 import org.apache.flink.runtime.executiongraph.Execution;
@@ -45,6 +46,7 @@ public class WordCount {
         // emit results
         if (params.has("output")){
             //counts.writeAsCsv("file:///tmp/wc.csv", "\n", " ", FileSystem.WriteMode.OVERWRITE);
+            // setParallelism 1 for getting one CSV file
             counts.writeAsCsv("file:///tmp/wc.csv", "\n", " ", FileSystem.WriteMode.OVERWRITE).setParallelism(1);
             // exec the program
             env.execute("word count example");

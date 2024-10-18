@@ -25,4 +25,13 @@
             <version>1.5.0</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>reduce</finalName>
+        <resources>
+            <resource>
+                <directory>src</directory>
+            </resource>
+        </resources>
+    </build>
 </project>
