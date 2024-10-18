@@ -9,6 +9,7 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.core.fs.FileSystem;
 
 public class JoinExample {
 
@@ -60,7 +61,13 @@ public class JoinExample {
                 });
 
         System.out.println("joined: ");
-        System.out.println(joined.collect());
+        //System.out.println(joined.collect());
+
+        joined.writeAsCsv(params.get("output"), "\n", " ",
+                FileSystem.WriteMode.OVERWRITE).setParallelism(1);
+        env.execute("inner join example");
+
+
         System.out.println("*** end ***");
     }
     
