@@ -31,7 +31,7 @@ public class WordCount {
             });
 
             // return a tuple of (name, 1)
-            DataSet<Tuple2<String, Integer>> tokenized = filtered.map(new module10.WordCount.Tokenizer());
+            DataSet<Tuple2<String, Integer>> tokenized = filtered.map(new WordCount.Tokenizer());
 
             System.out.println("tokenized: " + tokenized.collect());
             // group by the tuple field "0" and sum up tuplie field 1
@@ -40,7 +40,7 @@ public class WordCount {
             // emit results
             if (params.has("output")){
                 //counts.writeAsCsv("file:///tmp/wc.csv", "\n", " ", FileSystem.WriteMode.OVERWRITE);
-                counts.writeAsCsv("file:///tmp/wc.csv", "\n", " ", FileSystem.WriteMode.OVERWRITE).setParallelism(1);
+                counts.writeAsCsv(params.get("output"), "\n", " ", FileSystem.WriteMode.OVERWRITE).setParallelism(1);
                 // exec the program
                 env.execute("word count example");
             }

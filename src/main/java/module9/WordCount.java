@@ -35,7 +35,7 @@ public class WordCount
         {
             counts.writeAsCsv(params.get("output"), "\n", " ");
 
-            env.execute("WordCount Example");
+            env.execute("module10.WordCount Example");
         }
     }
 
