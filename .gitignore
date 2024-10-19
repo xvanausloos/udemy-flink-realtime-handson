@@ -2,3 +2,5 @@
 reduce.iml
 /target
 /results.csv
+.DS_Store
+/project
