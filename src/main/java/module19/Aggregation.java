@@ -3,6 +3,7 @@ package module19;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple4;
 import org.apache.flink.api.java.tuple.Tuple5;
+import org.apache.flink.core.fs.FileSystem;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -19,7 +20,11 @@ public class Aggregation {
 
         // month, category, product, profit
         DataStream<Tuple4<String, String, String, Integer>> mapped = data.map(new Splitter());
-        mapped.print();
+        //mapped.print();
+
+        // sum by Month
+        mapped.keyBy(0).sum(3).writeAsText("results/out_sum1", FileSystem.WriteMode.OVERWRITE).setParallelism(1);
+
         env.execute("aggregation");
     }
 
